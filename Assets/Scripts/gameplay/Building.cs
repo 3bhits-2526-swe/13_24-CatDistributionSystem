@@ -11,8 +11,7 @@ public class Building : MonoBehaviour
 
     internal BuildingState state = BuildingState.Waiting;
 
-    [SerializeField] private GameObject outPutProduct;
-    [SerializeField] private float productionTime;
+    internal float productionTime;
 
     private void Awake()
     {
@@ -22,10 +21,10 @@ public class Building : MonoBehaviour
     internal void ReceiveProdukt(GameObject receivedProduct)
     {
         if (state == BuildingState.Working) return;
-        if (null != receivedProduct)
-            product = receivedProduct;
+        //if (null != receivedProduct)
+        //    product = receivedProduct;
         StartCoroutine(Produce(receivedProduct));
-    }  
+    }
     internal void OutputProduct(GameObject finishedProduct)
     {
         if (state == BuildingState.Working) return;
@@ -45,17 +44,19 @@ public class Building : MonoBehaviour
         yield return new WaitForSeconds(productionTime);
         Debug.Log($"{gameObject.name} finished Production!");
         state = BuildingState.Waiting;
-        GetFinishedProduct(receivedProduct);
-        OutputProduct();
+
+        GameObject finishedProduct = GetFinishedProduct(receivedProduct);
+
+        OutputProduct(finishedProduct);
     }
-    
+
     private void RecalculateStats()
     {
 
     }
 
-    private GameObject GetFinishedProduct()
+    private GameObject GetFinishedProduct(GameObject receivedObjectsssssssss)
     {
-
+        return new GameObject();
     }
 }
