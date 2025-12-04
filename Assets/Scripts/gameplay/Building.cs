@@ -12,10 +12,11 @@ public class Building : MonoBehaviour
     internal BuildingState state = BuildingState.Waiting;
 
     internal float productionTime;
+    internal string buildingName = "DefaultBuildingName";
 
     private void Awake()
     {
-        // Set obj name
+        gameObject.name = $"{buildingName} x:{transform.position.x}|y:{transform.position.y}";
     }
 
     internal void ReceiveProdukt(GameObject receivedProduct)
