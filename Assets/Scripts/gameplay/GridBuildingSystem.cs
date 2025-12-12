@@ -58,9 +58,7 @@ public class GridBuildingSystem : MonoBehaviour
         selectedObject = building;
 
         if (selectedObject.TryGetComponent<Building>(out var buildingComp))
-        {
             buildingComp.OnPickedUp();
-        }
     }
 
     private void UpdatePlacementPreview()
@@ -88,9 +86,7 @@ public class GridBuildingSystem : MonoBehaviour
         placementPreview.transform.position = snappedPos;
 
         if (placementPreview.TryGetComponent<Building>(out var building))
-        {
             building.OnPlaced();
-        }
 
         // Clear placement mode
         placementPreview = null;
