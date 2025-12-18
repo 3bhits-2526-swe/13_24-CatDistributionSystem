@@ -5,6 +5,6 @@ public class Factory : Building
 
     private void Awake()
     {
-        productionTime = 3f;
+        //productionTime = 3f;
     }
 }

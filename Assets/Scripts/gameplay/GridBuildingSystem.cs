@@ -14,8 +14,8 @@ public class GridBuildingSystem : MonoBehaviour
     }
 
     [Header("Grid Settings")]
-    [SerializeField] private float gridSize = 1f;
-    [SerializeField] private bool snapToGrid = true;
+    [SerializeField] internal float gridSize = 1f;
+    [SerializeField] internal bool snapToGrid = true;
 
     [Header("Visuals")]
     [SerializeField] internal Color validPlacementColor = new Color(0, 1, 0, 0.5f);
@@ -68,7 +68,7 @@ public class GridBuildingSystem : MonoBehaviour
 
         placementPreview.transform.position = snappedPos;
 
-        bool canPlace = CanPlaceAt(snappedPos);
+        bool canPlace = CanPlaceAt();
         ghost?.UpdateVisual(canPlace);
     }
 
@@ -79,7 +79,7 @@ public class GridBuildingSystem : MonoBehaviour
 
         Vector2 snappedPos = snapToGrid ? SnapToGrid(position) : position;
 
-        if (!CanPlaceAt(snappedPos))
+        if (!CanPlaceAt())
             return false;
 
         // Place the object

@@ -1,14 +1,180 @@
-// Each #kernel tells which function to compile; you can have many kernels
-#pragma kernel CSMain
+// ASCII_Compute.compute
 
-// Create a RenderTexture with enableRandomWrite flag and set it
-// with cs.SetTexture
-RWTexture2D<float4> Result;
+#pragma kernel CS_RenderASCII
+#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+#include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Texture.hlsl"
 
-[numthreads(8,8,1)]
-void CSMain (uint3 id : SV_DispatchThreadID)
-{
-    // TODO: insert actual code here!
+// --- CONSTANTS AND TEXTURE DECLARATIONS ---
+#define AFX_PI 3.14159265359
 
-    Result[id.xy] = float4(id.x & id.y, (id.x & 15)/15.0, (id.y & 15)/15.0, 0.0);
+// Properties (passed from C#)
+int _EdgeThreshold;
+float _DepthCutoff;
+bool _Edges;
+bool _Fill;
+float _Exposure;
+float _Attenuation;
+bool _InvertLuminance;
+float3 _ASCIIColor;
+float3 _BackgroundColor;
+float _BlendWithBase;
+float _DepthFalloff;
+float _DepthOffset;
+bool _ViewDog;
+bool _ViewUncompressed;
+bool _ViewEdges;
+
+// Input Textures (Read-Only)
+Texture2D<float4> _SobelTex; 
+SamplerState sampler_SobelTex;
+
+Texture2D<float4> _DownscaleTex;
+SamplerState sampler_DownscaleTex;
+
+Texture2D<float4> _NormalsDepthTex;
+SamplerState sampler_NormalsDepthTex;
+
+Texture2D<float> _AsciiEdgesTex; // Reads single channel R
+SamplerState sampler_AsciiEdgesTex;
+
+Texture2D<float4> _EdgesASCIILUT;
+SamplerState sampler_EdgesASCIILUT;
+
+Texture2D<float4> _FillASCIILUT;
+SamplerState sampler_FillASCIILUT;
+
+// Output Texture (Writeable, the final image)
+RWTexture2D<float4> _ResultTexture;
+
+// Shared memory for 8x8 thread group communication
+groupshared int edgeCount[64];
+
+// Utility function (not used in this pass, kept for completeness if needed)
+float2 transformUV(float2 uv) {
+    return uv; 
+}
+
+[numthreads(8, 8, 1)]
+void CS_RenderASCII(uint3 tid : SV_DISPATCHTHREADID, uint3 gid : SV_GROUPTHREADID) {
+    
+    // --- 1. Edge Detection (Per-pixel) ---
+    // Convert global thread ID to int3 for the Load function
+    int3 threadCoord = int3(tid.xy, 0); 
+    
+    // FIX 1: Use int3(tid.xy, 0) for Load
+    float2 sobel = _SobelTex.Load(threadCoord).rg; // Load Sobel (Theta, EdgeFlag)
+    float theta = sobel.r;
+    float absTheta = abs(theta) / AFX_PI;
+    int direction = -1;
+
+    if (sobel.g > 0.5f) { // Check if an edge was detected by the Sobel pass
+        if ((0.0f <= absTheta && absTheta < 0.05f) || (0.9f < absTheta && absTheta <= 1.0f)) direction = 0; // VERTICAL
+        else if (0.45f < absTheta && absTheta < 0.55f) direction = 1; // HORIZONTAL
+        else if (0.05f < absTheta && absTheta < 0.45f) direction = sign(theta) > 0 ? 3 : 2; // DIAGONAL 1
+        else if (0.55f < absTheta && absTheta < 0.9f) direction = sign(theta) > 0 ? 2 : 3; // DIAGONAL 2
+    }
+
+    // Set group thread bucket to direction
+    edgeCount[gid.x + gid.y * 8] = direction;
+
+    // --- 2. Group Communication (Common Edge for 8x8 tile) ---
+    GroupMemoryBarrierWithGroupSync(); // Synchronize threads in the 8x8 group
+
+    int commonEdgeIndex = -1;
+    if ((gid.x == 0) && (gid.y == 0)) {
+        uint buckets[4] = {0, 0, 0, 0};
+
+        for (int i = 0; i < 64; ++i) {
+            if (edgeCount[i] != -1)
+                buckets[edgeCount[i]] += 1;
+        }
+
+        uint maxValue = 0;
+
+        for (int j = 0; j < 4; ++j) {
+            if (buckets[j] > maxValue) {
+                commonEdgeIndex = j;
+                maxValue = buckets[j];
+            }
+        }
+
+        if (maxValue < _EdgeThreshold) commonEdgeIndex = -1;
+        edgeCount[0] = commonEdgeIndex;
+    }
+
+    GroupMemoryBarrierWithGroupSync();
+
+    // Read the group result
+    commonEdgeIndex = _ViewUncompressed ? direction : edgeCount[0];
+
+    // --- 3. ASCII Character Lookup ---
+    float3 ascii = 0;
+
+    // FIX 2: Downscale coordinate calculation must result in int2 
+    int2 downscaleID = int2(tid.xy) / 8;
+
+    // FIX 3: Use int3(downscaleID, 0) for Load
+    float4 downscaleInfo = _DownscaleTex.Load(int3(downscaleID, 0)); // Load downscaled color/luminance
+
+    if (commonEdgeIndex != -1 && _Edges) {
+        float quantizedEdge = (commonEdgeIndex + 1) * 8.0f;
+
+        // Coordinates for LUT must be integers
+        int2 localUV; 
+        // FIX 4: Explicitly cast float to int for coordinates
+        localUV.x = (int)(tid.x % 8) + (int)quantizedEdge; 
+        localUV.y = 8 - (int)(tid.y % 8) - 1; 
+
+        // FIX 5: Use int3(localUV, 0) for Load
+        ascii = _EdgesASCIILUT.Load(int3(localUV, 0)).rgb; 
+    } else if (_Fill) {
+        float luminance = saturate(pow(downscaleInfo.w * _Exposure, _Attenuation));
+
+        if (_InvertLuminance) luminance = 1 - luminance;
+
+        luminance = max(0, (floor(luminance * 10) - 1)) / 10.0f;
+        
+        // Coordinates for LUT must be integers
+        int2 localUV;
+        // FIX 6: Explicitly cast float calculation to int
+        localUV.x = (int)(tid.x % 8) + (int)(luminance * 80); 
+        localUV.y = (int)(tid.y % 8);
+
+        // FIX 7: Use int3(localUV, 0) for Load
+        ascii = _FillASCIILUT.Load(int3(localUV, 0)).rgb;
+    }
+    
+    // --- 4. Color and Depth Blending ---
+    // Color blend
+    ascii = lerp(_BackgroundColor, lerp(_ASCIIColor, downscaleInfo.rgb, _BlendWithBase), ascii);
+
+    // Depth/Fog Falloff
+    // FIX 8: Use int2
+    int2 sampleTid = (int2(tid.xy) / 8) * 8 + 4; // Sample center pixel of the 8x8 block
+    
+    // FIX 9: Use int3(sampleTid, 0) for Load
+    float depth = _NormalsDepthTex.Load(int3(sampleTid, 0)).w; // Load Depth
+    float z = depth * 1000.0f; // Scale factor needs tuning
+
+    float fogFactor = (_DepthFalloff * 0.005f / sqrt(log(2.0f))) * max(0.0f, z - _DepthOffset);
+    fogFactor = exp2(-fogFactor * fogFactor);
+
+    ascii = lerp(_BackgroundColor, ascii, fogFactor);
+
+
+    // --- 5. Debug Views ---
+    if (_ViewDog) {
+        // FIX 10: AsciiEdgesTex is Texture2D<float>, requires int3
+        ascii = _AsciiEdgesTex.Load(threadCoord).r;
+    }
+    if (_ViewEdges || _ViewUncompressed) {
+        ascii = 0;
+        if (commonEdgeIndex == 0) ascii = float3(1, 0, 0);
+        if (commonEdgeIndex == 1) ascii = float3(0, 1, 0);
+        if (commonEdgeIndex == 2) ascii = float3(0, 1, 1);
+        if (commonEdgeIndex == 3) ascii = float3(1, 1, 0);
+    }
+    
+    // --- 6. Final Output ---
+    _ResultTexture[tid.xy] = float4(ascii, 1.0f);
 }
