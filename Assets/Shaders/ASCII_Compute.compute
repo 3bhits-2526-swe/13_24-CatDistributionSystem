@@ -62,7 +62,7 @@ void CS_RenderASCII(uint3 tid : SV_DISPATCHTHREADID, uint3 gid : SV_GROUPTHREADI
     int3 threadCoord = int3(tid.xy, 0); 
     
     // FIX 1: Use int3(tid.xy, 0) for Load
-    float2 sobel = _SobelTex.Load(threadCoord).rg; // Load Sobel (Theta, EdgeFlag)
+    float2 sobel = _SobelTex.Load(int3(tid.xy, 0)).rg; // Load Sobel (Theta, EdgeFlag)
     float theta = sobel.r;
     float absTheta = abs(theta) / AFX_PI;
     int direction = -1;
@@ -164,8 +164,7 @@ void CS_RenderASCII(uint3 tid : SV_DISPATCHTHREADID, uint3 gid : SV_GROUPTHREADI
 
     // --- 5. Debug Views ---
     if (_ViewDog) {
-        // FIX 10: AsciiEdgesTex is Texture2D<float>, requires int3
-        ascii = _AsciiEdgesTex.Load(threadCoord).r;
+        ascii = _AsciiEdgesTex.Load(int3(tid.xy, 0)).r;
     }
     if (_ViewEdges || _ViewUncompressed) {
         ascii = 0;

@@ -3,11 +3,6 @@ using UnityEngine;
 [RequireComponent(typeof(Collider2D))]
 public class Building : MonoBehaviour
 {
-    [Header("Building Settings")]
-    public string buildingName;
-    public bool canRotate = true;
-    public bool canBePickedUp = true;
-
     private Collider2D buildingCollider;
     private SpriteRenderer spriteRenderer;
     private Color originalColor;
@@ -84,9 +79,7 @@ public class Building : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             if (CanPlaceAt(snappedPos))
-            {
                 OnPlaced();
-            }
         }
     }
 

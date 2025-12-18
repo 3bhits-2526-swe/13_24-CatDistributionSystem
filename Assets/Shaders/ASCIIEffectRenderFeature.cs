@@ -205,16 +205,15 @@ public class ASCIIEffectPass : ScriptableRenderPass
         int threadGroupY = Mathf.CeilToInt(height / 8.0f);
 
         // Bind Compute Shader Textures (use GetRenderTexture to pass the RTHandle's underlying RT)
-        cmd.SetComputeTextureParam(m_ComputeShader, m_CSKernel, "_SobelTex", m_AsciiSobelRT.nameID);
-        cmd.SetComputeTextureParam(m_ComputeShader, m_CSKernel, "_DownscaleTex", m_DownscaleRT.nameID);
-        cmd.SetComputeTextureParam(m_ComputeShader, m_CSKernel, "_NormalsDepthTex", m_NormalsDepthRT.nameID);
-        cmd.SetComputeTextureParam(m_ComputeShader, m_CSKernel, "_AsciiEdgesTex", m_AsciiEdgesRT.nameID);
+        cmd.SetComputeTextureParam(m_ComputeShader, m_CSKernel, "_SobelTex", m_AsciiSobelRT.rt);
+        cmd.SetComputeTextureParam(m_ComputeShader, m_CSKernel, "_DownscaleTex", m_DownscaleRT.rt);
+        cmd.SetComputeTextureParam(m_ComputeShader, m_CSKernel, "_NormalsDepthTex", m_NormalsDepthRT.rt);
+        cmd.SetComputeTextureParam(m_ComputeShader, m_CSKernel, "_AsciiEdgesTex", m_AsciiEdgesRT.rt);
         cmd.SetComputeTextureParam(m_ComputeShader, m_CSKernel, "_EdgesASCIILUT", EdgesLut);
         cmd.SetComputeTextureParam(m_ComputeShader, m_CSKernel, "_FillASCIILUT", FillLut);
 
         // Bind the final output texture (RWTexture2D)
-        cmd.SetComputeTextureParam(m_ComputeShader, m_CSKernel, "_ResultTexture", m_FinalASCIIRT.nameID);
-
+        cmd.SetComputeTextureParam(m_ComputeShader, m_CSKernel, "_ResultTexture", m_FinalASCIIRT.rt);
         // Dispatch the Compute Shader
         cmd.DispatchCompute(m_ComputeShader, m_CSKernel, threadGroupX, threadGroupY, 1);
 
