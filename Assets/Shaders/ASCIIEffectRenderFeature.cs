@@ -104,15 +104,15 @@ public class ASCIIEffectPass : ScriptableRenderPass
     // --- ALLOCATION: Allocates all temporary RTHandles ---
     public override void OnCameraSetup(CommandBuffer cmd, ref RenderingData renderingData)
     {
+        m_CameraColorTextureRT = renderingData.cameraData.renderer.cameraColorTargetHandle;
+
         if (m_Material == null || m_ComputeShader == null) return;
 
         var stack = VolumeManager.instance.stack;
         m_Volume = stack.GetComponent<ASCIIEffectVolume>();
 
         if (m_Volume.UseDepth.value || m_Volume.UseNormals.value)
-        {
             ConfigureInput(ScriptableRenderPassInput.Depth);
-        }
 
         // --- RTHandle Allocation using RTHandles.Alloc ---
         // The RenderTextureDescriptor and allocation settings are managed here.
@@ -205,15 +205,15 @@ public class ASCIIEffectPass : ScriptableRenderPass
         int threadGroupY = Mathf.CeilToInt(height / 8.0f);
 
         // Bind Compute Shader Textures (use GetRenderTexture to pass the RTHandle's underlying RT)
-        cmd.SetComputeTextureParam(m_ComputeShader, m_CSKernel, "_SobelTex", m_AsciiSobelRT);
-        cmd.SetComputeTextureParam(m_ComputeShader, m_CSKernel, "_DownscaleTex", m_DownscaleRT);
-        cmd.SetComputeTextureParam(m_ComputeShader, m_CSKernel, "_NormalsDepthTex", m_NormalsDepthRT);
-        cmd.SetComputeTextureParam(m_ComputeShader, m_CSKernel, "_AsciiEdgesTex", m_AsciiEdgesRT);
+        cmd.SetComputeTextureParam(m_ComputeShader, m_CSKernel, "_SobelTex", m_AsciiSobelRT.nameID);
+        cmd.SetComputeTextureParam(m_ComputeShader, m_CSKernel, "_DownscaleTex", m_DownscaleRT.nameID);
+        cmd.SetComputeTextureParam(m_ComputeShader, m_CSKernel, "_NormalsDepthTex", m_NormalsDepthRT.nameID);
+        cmd.SetComputeTextureParam(m_ComputeShader, m_CSKernel, "_AsciiEdgesTex", m_AsciiEdgesRT.nameID);
         cmd.SetComputeTextureParam(m_ComputeShader, m_CSKernel, "_EdgesASCIILUT", EdgesLut);
         cmd.SetComputeTextureParam(m_ComputeShader, m_CSKernel, "_FillASCIILUT", FillLut);
 
         // Bind the final output texture (RWTexture2D)
-        cmd.SetComputeTextureParam(m_ComputeShader, m_CSKernel, "_ResultTexture", m_FinalASCIIRT);
+        cmd.SetComputeTextureParam(m_ComputeShader, m_CSKernel, "_ResultTexture", m_FinalASCIIRT.nameID);
 
         // Dispatch the Compute Shader
         cmd.DispatchCompute(m_ComputeShader, m_CSKernel, threadGroupX, threadGroupY, 1);
@@ -225,6 +225,7 @@ public class ASCIIEffectPass : ScriptableRenderPass
 
         context.ExecuteCommandBuffer(cmd);
         CommandBufferPool.Release(cmd);
+        
     }
 
     // --- CLEANUP: Releases all RTHandles ---
@@ -326,9 +327,6 @@ public class ASCIIEffectRenderFeature : ScriptableRendererFeature
         {
             return;
         }
-
-        // --- UPDATED: Pass the camera's color target as an RTHandle ---
-        m_ScriptablePass.Setup(renderer.cameraColorTargetHandle);
 
         renderer.EnqueuePass(m_ScriptablePass);
     }

@@ -379,6 +379,97 @@ MonoBehaviour:
   blueOutBlueIn:
     m_OverrideState: 1
     m_Value: 100
+--- !u!114 &-4046743444119954200
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: ASCIIEffectVolume
+  m_EditorClassIdentifier: Assembly-CSharp::ASCIIEffectVolume
+  active: 1
+  Zoom:
+    m_OverrideState: 1
+    m_Value: 1
+  Offset:
+    m_OverrideState: 1
+    m_Value: {x: 0, y: 0}
+  KernelSize:
+    m_OverrideState: 1
+    m_Value: 2
+  Sigma:
+    m_OverrideState: 1
+    m_Value: 2
+  SigmaScale:
+    m_OverrideState: 1
+    m_Value: 1.6
+  Tau:
+    m_OverrideState: 1
+    m_Value: 1
+  Threshold:
+    m_OverrideState: 1
+    m_Value: 0.005
+  UseDepth:
+    m_OverrideState: 1
+    m_Value: 1
+  DepthThreshold:
+    m_OverrideState: 1
+    m_Value: 0.1
+  UseNormals:
+    m_OverrideState: 1
+    m_Value: 1
+  NormalThreshold:
+    m_OverrideState: 1
+    m_Value: 0.1
+  DepthCutoff:
+    m_OverrideState: 1
+    m_Value: 0
+  EdgeThreshold:
+    m_OverrideState: 1
+    m_Value: 8
+  Edges:
+    m_OverrideState: 1
+    m_Value: 1
+  Fill:
+    m_OverrideState: 1
+    m_Value: 1
+  Exposure:
+    m_OverrideState: 1
+    m_Value: 1
+  Attenuation:
+    m_OverrideState: 1
+    m_Value: 1
+  InvertLuminance:
+    m_OverrideState: 1
+    m_Value: 0
+  ASCIIColor:
+    m_OverrideState: 1
+    m_Value: {r: 1, g: 1, b: 1, a: 1}
+  BackgroundColor:
+    m_OverrideState: 1
+    m_Value: {r: 0, g: 0, b: 0, a: 1}
+  BlendWithBase:
+    m_OverrideState: 1
+    m_Value: 0
+  DepthFalloff:
+    m_OverrideState: 1
+    m_Value: 0
+  DepthOffset:
+    m_OverrideState: 1
+    m_Value: 0
+  ViewDog:
+    m_OverrideState: 1
+    m_Value: 0
+  ViewUncompressed:
+    m_OverrideState: 1
+    m_Value: 0
+  ViewEdges:
+    m_OverrideState: 1
+    m_Value: 0
 --- !u!114 &-3978695733392391637
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -597,7 +688,7 @@ MonoBehaviour:
   - {fileID: -8186968272690591729}
   - {fileID: -3978695733392391637}
   - {fileID: -1083910812058648046}
-  - {fileID: -7643389054114383990}
+  - {fileID: -4046743444119954200}
 --- !u!114 &156332030701414761
 MonoBehaviour:
   m_ObjectHideFlags: 3
