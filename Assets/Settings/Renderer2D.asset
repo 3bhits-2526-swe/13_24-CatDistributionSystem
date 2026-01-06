@@ -24,9 +24,8 @@ MonoBehaviour:
     probeSamplingDebugMesh: {fileID: -3555484719484374845, guid: 57d7c4c16e2765b47a4d2069b311bffe, type: 3}
     probeSamplingDebugTexture: {fileID: 2800000, guid: 24ec0e140fb444a44ab96ee80844e18e, type: 3}
     probeVolumeBlendStatesCS: {fileID: 0}
-  m_RendererFeatures:
-  - {fileID: 8012575041889565255}
-  m_RendererFeatureMap: 47fafc538c62326f
+  m_RendererFeatures: []
+  m_RendererFeatureMap: 
   m_UseNativeRenderPass: 0
   m_LayerMask:
     serializedVersion: 2
@@ -69,8 +68,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c4bc7105762ed1458a154a2879e27e5, type: 3}
   m_Name: ASCIIEffectRenderFeature
   m_EditorClassIdentifier: 
-  m_Active: 1
-  shader: {fileID: 4800000, guid: f691b49f4a749524fa840c4ff23e61f3, type: 3}
+  zoom: 1
+  offset: {x: 0, y: 0}
+  kernelSize: 2
+  sigma: 2
+  sigmaScale: 1.6
+  tau: 1
+  threshold: 0.005
+  useDepth: 1
+  depthThreshold: 0.1
+  useNormals: 1
+  normalThreshold: 0.1
+  depthCutoff: 0
+  edgeThreshold: 8
+  drawEdges: 1
+  drawFill: 1
+  exposure: 1
+  attenuation: 1
+  invertLuminance: 0
+  asciiColor: {r: 1, g: 1, b: 1, a: 1}
+  backgroundColor: {r: 0, g: 0, b: 0, a: 1}
+  blendWithBase: 0
+  depthFalloff: 0
+  depthOffset: 0
   computeShader: {fileID: 7200000, guid: 10ad233b65566124aaeb7018d2d257ba, type: 3}
-  edgesASCIILUT: {fileID: 2800000, guid: 4a5b8bc7aeb0b5f43916d20bb0e28c98, type: 3}
-  fillASCIILUT: {fileID: 2800000, guid: a93c52522004b274ca5cf0ef888fb507, type: 3}
+  edgesASCIITexture: {fileID: 0}
+  fillASCIITexture: {fileID: 0}
