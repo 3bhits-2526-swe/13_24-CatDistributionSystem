@@ -787,7 +787,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1120553400}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.5806775
+  m_Size: 0.58067745
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -3681,7 +3681,6 @@ GameObject:
   - component: {fileID: 1198774786}
   - component: {fileID: 1198774791}
   - component: {fileID: 1198774793}
-  - component: {fileID: 1198774792}
   - component: {fileID: 1198774794}
   m_Layer: 0
   m_Name: GameManager
@@ -3783,22 +3782,7 @@ MonoBehaviour:
   defaultRawMaterial: {fileID: 11400000, guid: a2fb44e1c436a9b479a0bcdba98316a2, type: 2}
   defaultFactoryRecipe: {fileID: 11400000, guid: e44fb4fec7333e94788feff34075037e, type: 2}
   defaultPackagerRecipe: {fileID: 11400000, guid: cf80afccb769cd149a15dc1d8eb165f1, type: 2}
-  gridCellSize: 1
-  gridWidth: 50
-  gridHeight: 50
 --- !u!114 &1198774791
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1198774783}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7af41189ab3cfe74bb25d035217f55a0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1198774792
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3840,7 +3824,7 @@ MonoBehaviour:
   ghostMaterialInvalid: {fileID: 2100000, guid: 500be3a0c86553d449fac9f4f6a4d3d1, type: 2}
   uiLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 4294967295
 --- !u!1 &1224783635
 GameObject:
   m_ObjectHideFlags: 0

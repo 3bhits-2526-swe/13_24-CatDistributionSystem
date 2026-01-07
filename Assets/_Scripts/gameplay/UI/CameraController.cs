@@ -72,9 +72,7 @@ public class CameraController : MonoBehaviour
         }
 
         if (Input.GetMouseButtonUp(2))
-        {
             isDragging = false;
-        }
 
         if (movement != Vector3.zero)
         {

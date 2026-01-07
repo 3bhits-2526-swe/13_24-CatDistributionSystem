@@ -16,10 +16,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] private RecipeData defaultFactoryRecipe;
     [SerializeField] private RecipeData defaultPackagerRecipe;
 
-    [SerializeField] private float gridCellSize = 1f;
-    [SerializeField] private int gridWidth = 50;
-    [SerializeField] private int gridHeight = 50;
-
     private void Awake()
     {
         if (Instance != null && Instance != this)

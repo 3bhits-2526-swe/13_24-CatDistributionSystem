@@ -33,7 +33,6 @@ public class ResourceManager : MonoBehaviour
     }
 
     public bool CanAfford(int cost) => currentMoney >= cost;
-
     public void AddMoney(int amount)
     {
         currentMoney += amount;
