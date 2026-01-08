@@ -787,7 +787,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1120553400}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.58067745
+  m_Size: 0.5806775
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -986,7 +986,7 @@ Transform:
   m_GameObject: {fileID: 342700895}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.388983, y: -1.5128604, z: 0}
+  m_LocalPosition: {x: 28.1, y: 23.6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1549,6 +1549,7 @@ MonoBehaviour:
   enableBoundaries: 1
   minBoundary: {x: -10, y: -10}
   maxBoundary: {x: 60, y: 60}
+  buildingPalette: {fileID: 1224783639}
 --- !u!1 &452034319
 GameObject:
   m_ObjectHideFlags: 0
@@ -3483,7 +3484,7 @@ Transform:
   m_GameObject: {fileID: 1154306577}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.36807013, y: 0.19443, z: 0}
+  m_LocalPosition: {x: 21.2, y: 21, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3737,7 +3738,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cab315fc2c919944d84f960223128e63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingMoney: 5000
+  startingMoney: 10000
   startingLevel: 0
 --- !u!114 &1198774788
 MonoBehaviour:
@@ -3820,11 +3821,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c35645db9ed6024499bb49502ca8fea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ghostMaterialValid: {fileID: 2100000, guid: 7676b895bb3ba6b49ab6edec454d4ea4, type: 2}
-  ghostMaterialInvalid: {fileID: 2100000, guid: 500be3a0c86553d449fac9f4f6a4d3d1, type: 2}
-  uiLayer:
-    serializedVersion: 2
-    m_Bits: 4294967295
+  ghostValidColor: {r: 0, g: 1, b: 0, a: 0.5}
+  ghostInvalidColor: {r: 1, g: 0, b: 0, a: 0.5}
+  buildingPalette: {fileID: 1224783639}
 --- !u!1 &1224783635
 GameObject:
   m_ObjectHideFlags: 0
@@ -3837,6 +3836,7 @@ GameObject:
   - component: {fileID: 1224783638}
   - component: {fileID: 1224783637}
   - component: {fileID: 1224783639}
+  - component: {fileID: 1224783640}
   m_Layer: 5
   m_Name: BuildingPalette
   m_TagString: Untagged
@@ -3917,6 +3917,7 @@ MonoBehaviour:
   buttonPrefab: {fileID: 1900929838703853105, guid: 0ac1481a93808a24eaab606c8c2086b2, type: 3}
   buttonParent: {fileID: 830932394}
   palettePanel: {fileID: 1224783635}
+  paletteCanvasGroup: {fileID: 1224783640}
   availableBuildings:
   - {fileID: 11400000, guid: 4ec41077777888342b6b5f73f687e322, type: 2}
   - {fileID: 11400000, guid: 1aa6ffcf0fb019644bad4b84134161c0, type: 2}
@@ -3925,6 +3926,19 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7eac3dd61f6930d4ab2b4e1219018996, type: 2}
   yStart: 950
   yIncrement: -400
+  xPosition: 0
+--- !u!225 &1224783640
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1224783635}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &1280364610
 GameObject:
   m_ObjectHideFlags: 0
@@ -5245,7 +5259,7 @@ Transform:
   m_GameObject: {fileID: 1591314186}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 34.8, y: 32.5, z: 0}
   m_LocalScale: {x: 0.15, y: 0.25, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

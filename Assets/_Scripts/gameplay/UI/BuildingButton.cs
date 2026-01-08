@@ -1,30 +1,54 @@
+using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using TMPro;
 
-public class BuildingButton : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
+public class BuildingButton : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private Image iconImage;
     [SerializeField] private TextMeshProUGUI nameText;
     [SerializeField] private TextMeshProUGUI costText;
     [SerializeField] private Image backgroundImage;
+    [SerializeField] private Canvas dragCanvas;
 
     [SerializeField] private Color normalColor = Color.white;
-    [SerializeField] private Color hoverColor = Color.green;
-    [SerializeField] private Color cannotAffordColor = Color.red;
+    [SerializeField] private Color hoverColor = new Color(0.8f, 1f, 0.8f, 1f);
+    [SerializeField] private Color cannotAffordColor = new Color(1f, 0.8f, 0.8f, 1f);
 
     private BuildingData buildingData;
-    private bool canAfford = false;
+    private CanvasGroup canvasGroup;
+    private RectTransform rectTransform;
+    private Vector2 originalPosition;
+    private GameObject dragObject;
+    private bool isDragging = false;
+    private bool isPointerOver = false;
 
-    public void Setup(BuildingData data)
+    private void Awake()
+    {
+        canvasGroup = GetComponent<CanvasGroup>();
+        if (canvasGroup == null)
+            canvasGroup = gameObject.AddComponent<CanvasGroup>();
+
+        rectTransform = GetComponent<RectTransform>();
+
+        if (dragCanvas == null)
+            dragCanvas = GetComponentInParent<Canvas>();
+    }
+
+    public void Initialize(BuildingData data)
     {
         buildingData = data;
-        UpdateDisplay();
+        UpdateVisuals();
         UpdateAffordability();
     }
 
-    private void UpdateDisplay()
+    private void Update()
+    {
+        UpdateAffordability();
+    }
+
+    private void UpdateVisuals()
     {
         if (buildingData == null) return;
 
@@ -38,56 +62,128 @@ public class BuildingButton : MonoBehaviour, IPointerDownHandler, IPointerEnterH
             iconImage.sprite = buildingData.sprite;
     }
 
-    private void Update()
-    {
-        UpdateAffordability();
-    }
-
     private void UpdateAffordability()
     {
-        if (buildingData == null || ResourceManager.Instance == null)
-        {
-            canAfford = false;
-            return;
-        }
+        if (buildingData == null || backgroundImage == null) return;
 
-        canAfford = ResourceManager.Instance.CanAfford(buildingData.baseCost);
+        bool affordable = ResourceManager.Instance != null &&
+                         ResourceManager.Instance.CanAfford(buildingData.baseCost);
 
+        if (!isPointerOver)
+            backgroundImage.color = affordable ? normalColor : cannotAffordColor;
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        isPointerOver = true;
         if (backgroundImage != null)
-            backgroundImage.color = canAfford ? normalColor : cannotAffordColor;
+        {
+            bool affordable = ResourceManager.Instance != null &&
+                             ResourceManager.Instance.CanAfford(buildingData.baseCost);
+            backgroundImage.color = affordable ? hoverColor : cannotAffordColor;
+        }
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        isPointerOver = false;
+        UpdateAffordability();
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
         if (buildingData == null) return;
+        if (ResourceManager.Instance == null) return;
 
-        Debug.Log($"BuildingButton clicked: {buildingData.buildingName}");
-
-        if (!canAfford)
+        if (!ResourceManager.Instance.CanAfford(buildingData.baseCost))
         {
-            Debug.LogWarning($"Cannot afford {buildingData.buildingName}. Cost: ${buildingData.baseCost}, Current money: ${ResourceManager.Instance.GetMoney()}");
+            Debug.LogWarning($"Cannot afford {buildingData.buildingName}. Cost: ${buildingData.baseCost}, Money: ${ResourceManager.Instance.GetMoney()}");
             return;
         }
 
-        if (PlacementController.Instance == null)
+        originalPosition = rectTransform.anchoredPosition;
+        canvasGroup.alpha = 0.5f;
+
+        CreateDragObject();
+        isDragging = true;
+    }
+
+    public void OnDrag(PointerEventData eventData)
+    {
+        if (!isDragging || dragObject == null) return;
+
+        Vector2 screenPoint = eventData.position;
+        Vector2 localPoint;
+
+        if (RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            dragCanvas.transform as RectTransform,
+            screenPoint,
+            dragCanvas.worldCamera,
+            out localPoint))
         {
-            Debug.LogError("PlacementController.Instance is null!");
-            return;
+            dragObject.transform.localPosition = localPoint;
+        }
+    }
+
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        if (!isDragging) return;
+
+        canvasGroup.alpha = 1f;
+        rectTransform.anchoredPosition = originalPosition;
+
+        if (dragObject != null)
+        {
+            Destroy(dragObject);
         }
 
-        Debug.Log($"Starting placement for {buildingData.buildingName}");
-        PlacementController.Instance.StartPlacement(buildingData, PlacementMode.SelectPlace);
+        bool isOverUI = IsPointerOverUIElement();
+
+        if (!isOverUI && buildingData != null && PlacementController.Instance != null)
+        {
+            PlacementController.Instance.StartPlacement(buildingData, PlacementMode.SelectPlace);
+        }
+
+        isDragging = false;
     }
 
-    public void OnPointerEnter(PointerEventData eventData)
+    private void CreateDragObject()
     {
-        if (backgroundImage != null)
-            backgroundImage.color = canAfford ? hoverColor : cannotAffordColor;
+        if (dragObject != null)
+            Destroy(dragObject);
+
+        dragObject = new GameObject("DragPreview");
+        dragObject.transform.SetParent(dragCanvas.transform, false);
+        dragObject.transform.SetAsLastSibling();
+
+        Image dragImage = dragObject.AddComponent<Image>();
+        dragImage.sprite = buildingData.sprite;
+        dragImage.raycastTarget = false;
+        dragImage.color = new Color(1f, 1f, 1f, 0.7f);
+
+        RectTransform dragRect = dragObject.GetComponent<RectTransform>();
+        dragRect.sizeDelta = rectTransform.sizeDelta;
+        dragRect.anchoredPosition = rectTransform.anchoredPosition;
     }
 
-    public void OnPointerExit(PointerEventData eventData)
+    private bool IsPointerOverUIElement()
     {
-        if (backgroundImage != null)
-            backgroundImage.color = canAfford ? normalColor : cannotAffordColor;
+        PointerEventData eventData = new PointerEventData(EventSystem.current);
+        eventData.position = Input.mousePosition;
+
+        List<RaycastResult> results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(eventData, results);
+
+        foreach (RaycastResult result in results)
+        {
+            if (result.gameObject == gameObject ||
+                result.gameObject.transform.IsChildOf(transform))
+                continue;
+
+            if (result.gameObject.GetComponent<RectTransform>() != null)
+                return true;
+        }
+
+        return false;
     }
 }

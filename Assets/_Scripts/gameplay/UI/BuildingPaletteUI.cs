@@ -1,49 +1,52 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class BuildingPaletteUI : MonoBehaviour
 {
     [SerializeField] private GameObject buttonPrefab;
-    [SerializeField] private Transform buttonParent;
+    [SerializeField] private RectTransform buttonParent;
     [SerializeField] private GameObject palettePanel;
+    [SerializeField] private CanvasGroup paletteCanvasGroup;
 
     [SerializeField] private List<BuildingData> availableBuildings = new List<BuildingData>();
 
     [Header("Button Layout")]
-    [SerializeField] private int yStart = 100;
+    [SerializeField] private int yStart = -40;
     [SerializeField] private int yIncrement = -80;
+    [SerializeField] private int xPosition = 0;
 
     private List<BuildingButton> spawnedButtons = new List<BuildingButton>();
-    private bool isPanelVisible = true;
+    private bool isPaletteOpen = true;
 
     private void Start()
     {
-        GenerateButtons();
-        SetPanelVisible(isPanelVisible);
+        if (paletteCanvasGroup == null)
+            paletteCanvasGroup = GetComponent<CanvasGroup>();
+
+        InitializeButtons();
+        SetPaletteVisibility(true);
     }
 
-    private void GenerateButtons()
+    private void InitializeButtons()
     {
         ClearExistingButtons();
 
-        float currentY = yStart;
+        int currentY = yStart;
 
-        for (int i = 0; i < availableBuildings.Count; i++)
+        foreach (BuildingData buildingData in availableBuildings)
         {
-            BuildingData buildingData = availableBuildings[i];
             if (buildingData == null) continue;
 
             GameObject buttonObject = Instantiate(buttonPrefab, buttonParent);
             RectTransform buttonRect = buttonObject.GetComponent<RectTransform>();
 
-            buttonRect.anchoredPosition = new Vector2(0, currentY);
+            buttonRect.anchoredPosition = new Vector2(xPosition, currentY);
 
-            BuildingButton buttonComponent = buttonObject.GetComponent<BuildingButton>();
-            if (buttonComponent != null)
+            BuildingButton buildingButton = buttonObject.GetComponent<BuildingButton>();
+            if (buildingButton != null)
             {
-                buttonComponent.Setup(buildingData);
-                spawnedButtons.Add(buttonComponent);
+                buildingButton.Initialize(buildingData);
+                spawnedButtons.Add(buildingButton);
             }
 
             currentY += yIncrement;
@@ -54,39 +57,47 @@ public class BuildingPaletteUI : MonoBehaviour
     {
         foreach (BuildingButton button in spawnedButtons)
         {
-            if (button != null)
+            if (button != null && button.gameObject != null)
                 Destroy(button.gameObject);
         }
         spawnedButtons.Clear();
     }
 
-    public void SetPanelVisible(bool visible)
+    public void SetPaletteVisibility(bool visible)
     {
-        isPanelVisible = visible;
+        isPaletteOpen = visible;
+
         if (palettePanel != null)
             palettePanel.SetActive(visible);
-    }
 
-    public void TogglePanel()
-    {
-        SetPanelVisible(!isPanelVisible);
-    }
-
-    public void AddBuildingToPalette(BuildingData buildingData)
-    {
-        if (!availableBuildings.Contains(buildingData))
+        if (paletteCanvasGroup != null)
         {
-            availableBuildings.Add(buildingData);
-            GenerateButtons();
+            paletteCanvasGroup.alpha = visible ? 1f : 0f;
+            paletteCanvasGroup.blocksRaycasts = visible;
+            paletteCanvasGroup.interactable = visible;
         }
     }
 
-    public void RemoveBuildingFromPalette(BuildingData buildingData)
+    public void TogglePalette()
     {
-        if (availableBuildings.Contains(buildingData))
-        {
-            availableBuildings.Remove(buildingData);
-            GenerateButtons();
-        }
+        SetPaletteVisibility(!isPaletteOpen);
+    }
+
+    public bool IsMouseOverPalette()
+    {
+        if (!isPaletteOpen) return false;
+
+        RectTransform paletteRect = GetComponent<RectTransform>();
+        if (paletteRect == null) return false;
+
+        Vector2 localMousePosition;
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            paletteRect,
+            Input.mousePosition,
+            Camera.main,
+            out localMousePosition
+        );
+        Debug.Log("Miazu");
+        return paletteRect.rect.Contains(localMousePosition);
     }
 }

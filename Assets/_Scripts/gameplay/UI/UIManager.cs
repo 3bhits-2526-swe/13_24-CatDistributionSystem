@@ -39,7 +39,7 @@ public class UIManager : MonoBehaviour
     public void ToggleBuildingPalette()
     {
         if (buildingPalette != null)
-            buildingPalette.TogglePanel();
+            buildingPalette.TogglePalette();
     }
 
     public void CancelCurrentPlacement()

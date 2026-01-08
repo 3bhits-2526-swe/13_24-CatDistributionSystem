@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public enum PlacementMode
 {
@@ -11,15 +12,14 @@ public class PlacementController : MonoBehaviour
 {
     public static PlacementController Instance { get; private set; }
 
-    [SerializeField] private Material ghostMaterialValid;
-    [SerializeField] private Material ghostMaterialInvalid;
-    [SerializeField] private LayerMask uiLayer;
+    [SerializeField] private Color ghostValidColor = new Color(0, 1, 0, 0.5f);
+    [SerializeField] private Color ghostInvalidColor = new Color(1, 0, 0, 0.5f);
+    [SerializeField] private BuildingPaletteUI buildingPalette;
 
     private PlacementMode currentMode = PlacementMode.None;
     private BuildingData selectedBuildingData;
     private GameObject ghostObject;
     private SpriteRenderer ghostRenderer;
-    private bool isDragging = false;
     private int currentRotation = 0;
 
     private void Awake()
@@ -35,13 +35,10 @@ public class PlacementController : MonoBehaviour
     private void Update()
     {
         if (currentMode == PlacementMode.None) return;
+        if (selectedBuildingData == null) return;
 
         HandleRotationInput();
-
-        if (currentMode == PlacementMode.DragDrop)
-            HandleDragDropMode();
-        else if (currentMode == PlacementMode.SelectPlace)
-            HandleSelectPlaceMode();
+        HandlePlacementMode();
     }
 
     private void HandleRotationInput()
@@ -54,32 +51,15 @@ public class PlacementController : MonoBehaviour
         }
     }
 
-    private void HandleDragDropMode()
+    private void HandlePlacementMode()
     {
-        Vector3 mouseWorldPos = GetMouseWorldPosition();
-        GridPosition gridPos = GridManager.Instance.WorldToGrid(mouseWorldPos);
-
-        UpdateGhostPosition(gridPos);
-
-        if (Input.GetMouseButton(0) && !isDragging)
+        if (IsPointerOverUI())
         {
-            isDragging = true;
+            if (ghostObject != null)
+                ghostObject.SetActive(false);
+            return;
         }
 
-        if (Input.GetMouseButtonUp(0) && isDragging)
-        {
-            TryPlaceBuilding(gridPos);
-            CancelPlacement();
-        }
-
-        if (Input.GetMouseButtonDown(1))
-        {
-            CancelPlacement();
-        }
-    }
-
-    private void HandleSelectPlaceMode()
-    {
         Vector3 mouseWorldPos = GetMouseWorldPosition();
         GridPosition gridPos = GridManager.Instance.WorldToGrid(mouseWorldPos);
 
@@ -90,7 +70,7 @@ public class PlacementController : MonoBehaviour
             TryPlaceBuilding(gridPos);
         }
 
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButtonDown(1) || Input.GetKeyDown(KeyCode.Escape))
         {
             CancelPlacement();
         }
@@ -99,6 +79,8 @@ public class PlacementController : MonoBehaviour
     private void UpdateGhostPosition(GridPosition gridPos)
     {
         if (ghostObject == null || selectedBuildingData == null) return;
+
+        ghostObject.SetActive(true);
 
         Vector3 worldPos = GridManager.Instance.GridToWorld(gridPos);
         worldPos += new Vector3(selectedBuildingData.size.width * 0.5f,
@@ -109,41 +91,23 @@ public class PlacementController : MonoBehaviour
         bool canAfford = ResourceManager.Instance != null &&
                         ResourceManager.Instance.CanAfford(selectedBuildingData.baseCost);
 
-        ghostRenderer.color = (isValid && canAfford) ?
-            new Color(0, 1, 0, 0.5f) : new Color(1, 0, 0, 0.5f);
-    }
-
-    private void TryPlaceBuilding(GridPosition gridPos)
-    {
-        if (selectedBuildingData == null) return;
-
-        if (!GridManager.Instance.IsPositionValid(gridPos, selectedBuildingData.size))
-            return;
-
-        if (ResourceManager.Instance == null || !ResourceManager.Instance.CanAfford(selectedBuildingData.baseCost))
-            return;
-
-        BuildingBehaviour building = BuildingManager.Instance.PlaceBuilding(
-            selectedBuildingData,
-            gridPos
-        );
-
-        if (building != null)
-        {
-            building.buildingBase.rotation = currentRotation;
-            building.transform.rotation = Quaternion.Euler(0, 0, currentRotation);
-        }
+        ghostRenderer.color = (isValid && canAfford) ? ghostValidColor : ghostInvalidColor;
     }
 
     public void StartPlacement(BuildingData data, PlacementMode mode)
     {
+        if (data == null) return;
+
+        CancelPlacement();
+
         selectedBuildingData = data;
         currentMode = mode;
         currentRotation = 0;
-        isDragging = false;
 
         CreateGhostObject();
-        GridManager.Instance.SetPlacementMode(true);
+
+        if (GridManager.Instance != null)
+            GridManager.Instance.SetGridVisibility(true);
     }
 
     private void CreateGhostObject()
@@ -151,27 +115,57 @@ public class PlacementController : MonoBehaviour
         if (ghostObject != null)
             Destroy(ghostObject);
 
-        ghostObject = new GameObject("Ghost");
+        ghostObject = new GameObject("PlacementGhost");
         ghostRenderer = ghostObject.AddComponent<SpriteRenderer>();
 
         if (selectedBuildingData != null && selectedBuildingData.sprite != null)
             ghostRenderer.sprite = selectedBuildingData.sprite;
 
-        ghostRenderer.color = new Color(0, 1, 0, 0.5f);
         ghostRenderer.sortingOrder = 100;
+        ghostRenderer.color = ghostValidColor;
+    }
+
+    private void TryPlaceBuilding(GridPosition gridPos)
+    {
+        if (selectedBuildingData == null) return;
+        if (IsPointerOverUI()) return;
+
+        if (!GridManager.Instance.IsPositionValid(gridPos, selectedBuildingData.size))
+            return;
+
+        if (ResourceManager.Instance == null || !ResourceManager.Instance.CanAfford(selectedBuildingData.baseCost))
+            return;
+
+        BuildingBehaviour building = BuildingManager.Instance.PlaceBuilding(selectedBuildingData, gridPos);
+
+        if (building != null)
+        {
+            building.buildingBase.rotation = currentRotation;
+            building.transform.rotation = Quaternion.Euler(0, 0, currentRotation);
+
+            CancelPlacement();
+        }
     }
 
     public void CancelPlacement()
     {
         currentMode = PlacementMode.None;
         selectedBuildingData = null;
-        isDragging = false;
         currentRotation = 0;
 
         if (ghostObject != null)
             Destroy(ghostObject);
 
-        GridManager.Instance.SetPlacementMode(false);
+        if (GridManager.Instance != null)
+            GridManager.Instance.SetGridVisibility(false);
+    }
+
+    private bool IsPointerOverUI()
+    {
+        if (buildingPalette != null && buildingPalette.IsMouseOverPalette())
+            return true;
+
+        return EventSystem.current.IsPointerOverGameObject();
     }
 
     private Vector3 GetMouseWorldPosition()
