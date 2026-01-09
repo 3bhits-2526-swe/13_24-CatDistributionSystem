@@ -129,6 +129,7 @@ public class BuildingButton : MonoBehaviour, IPointerDownHandler, IDragHandler, 
     {
         if (!isDragging) return;
 
+
         canvasGroup.alpha = 1f;
         rectTransform.anchoredPosition = originalPosition;
 
@@ -139,7 +140,7 @@ public class BuildingButton : MonoBehaviour, IPointerDownHandler, IDragHandler, 
 
         bool isOverUI = IsPointerOverUIElement();
 
-        if (!isOverUI && buildingData != null && PlacementController.Instance != null)
+        if (buildingData != null && PlacementController.Instance != null)
         {
             PlacementController.Instance.StartPlacement(buildingData, PlacementMode.SelectPlace);
         }

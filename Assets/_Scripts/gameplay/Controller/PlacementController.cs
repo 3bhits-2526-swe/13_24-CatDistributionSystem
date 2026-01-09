@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -53,12 +54,12 @@ public class PlacementController : MonoBehaviour
 
     private void HandlePlacementMode()
     {
-        if (IsPointerOverUI())
-        {
-            if (ghostObject != null)
-                ghostObject.SetActive(false);
-            return;
-        }
+        //if (IsPointerOverUI())
+        //{
+        //    if (ghostObject != null)
+        //        ghostObject.SetActive(false);
+        //    return;
+        //}
 
         Vector3 mouseWorldPos = GetMouseWorldPosition();
         GridPosition gridPos = GridManager.Instance.WorldToGrid(mouseWorldPos);
@@ -72,6 +73,7 @@ public class PlacementController : MonoBehaviour
 
         if (Input.GetMouseButtonDown(1) || Input.GetKeyDown(KeyCode.Escape))
         {
+            Debug.Log("Manually Canceled Placement");
             CancelPlacement();
         }
     }
@@ -98,7 +100,7 @@ public class PlacementController : MonoBehaviour
     {
         if (data == null) return;
 
-        CancelPlacement();
+        CancelPlacement(); // Reset
 
         selectedBuildingData = data;
         currentMode = mode;
@@ -127,21 +129,31 @@ public class PlacementController : MonoBehaviour
 
     private void TryPlaceBuilding(GridPosition gridPos)
     {
+        Debug.Log("Try Placement");
         if (selectedBuildingData == null) return;
-        if (IsPointerOverUI()) return;
+        //if (IsPointerOverUI()) return;
 
         if (!GridManager.Instance.IsPositionValid(gridPos, selectedBuildingData.size))
+        {
+            Debug.Log("Return because IsPositionValid" + GridManager.Instance.IsPositionValid(gridPos, selectedBuildingData.size));
             return;
+        }
 
         if (ResourceManager.Instance == null || !ResourceManager.Instance.CanAfford(selectedBuildingData.baseCost))
+        {
+            Debug.Log("Return because CanAfford or null" + ResourceManager.Instance == null || ResourceManager.Instance.CanAfford(selectedBuildingData.baseCost));
             return;
+        }
 
+        Debug.Log("Survived Checks");
         BuildingBehaviour building = BuildingManager.Instance.PlaceBuilding(selectedBuildingData, gridPos);
 
         if (building != null)
         {
             building.buildingBase.rotation = currentRotation;
             building.transform.rotation = Quaternion.Euler(0, 0, currentRotation);
+
+
 
             CancelPlacement();
         }

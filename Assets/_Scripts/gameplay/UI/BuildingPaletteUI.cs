@@ -97,7 +97,6 @@ public class BuildingPaletteUI : MonoBehaviour
             Camera.main,
             out localMousePosition
         );
-        Debug.Log("Miazu");
         return paletteRect.rect.Contains(localMousePosition);
     }
 }
