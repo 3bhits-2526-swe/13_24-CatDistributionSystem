@@ -1,0 +1,559 @@
+fileFormatVersion: 2
+guid: 6385aaa85416e9847a82dafeb8006699
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -7544682761380978292
+    second: Materializer-Sheet_0
+  - first:
+      213: 5584402062056452445
+    second: Materializer-Sheet_1
+  - first:
+      213: -7090784763161991828
+    second: Materializer-Sheet_2
+  - first:
+      213: 2339175415807261643
+    second: Materializer-Sheet_3
+  - first:
+      213: -5353335659172195189
+    second: Materializer-Sheet_4
+  - first:
+      213: -1012973041768902420
+    second: Materializer-Sheet_5
+  - first:
+      213: 1736244332697355174
+    second: Materializer-Sheet_6
+  - first:
+      213: -1928858557802642111
+    second: Materializer-Sheet_7
+  - first:
+      213: -1246731426078394210
+    second: Materializer-Sheet_8
+  - first:
+      213: 1522240564448870792
+    second: Materializer-Sheet_9
+  - first:
+      213: 8837139120576685766
+    second: Materializer-Sheet_10
+  - first:
+      213: 6849693946055043285
+    second: Materializer-Sheet_11
+  - first:
+      213: -1632169443495951797
+    second: Materializer-Sheet_12
+  - first:
+      213: 635157410140674145
+    second: Materializer-Sheet_13
+  - first:
+      213: -3549868816976061555
+    second: Materializer-Sheet_14
+  - first:
+      213: -2677635119581955416
+    second: Materializer-Sheet_15
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 25
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 0
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 3
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: iOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Materializer-Sheet_0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 4
+        width: 46
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c81afd08007eb4790800000000000000
+      internalID: -7544682761380978292
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Materializer-Sheet_1
+      rect:
+        serializedVersion: 2
+        x: 51
+        y: 4
+        width: 46
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d5175d78618cf7d40800000000000000
+      internalID: 5584402062056452445
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Materializer-Sheet_2
+      rect:
+        serializedVersion: 2
+        x: 101
+        y: 4
+        width: 46
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c652af493d8789d90800000000000000
+      internalID: -7090784763161991828
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Materializer-Sheet_3
+      rect:
+        serializedVersion: 2
+        x: 151
+        y: 4
+        width: 46
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bcbb48ea5ab667020800000000000000
+      internalID: 2339175415807261643
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Materializer-Sheet_4
+      rect:
+        serializedVersion: 2
+        x: 201
+        y: 4
+        width: 46
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b841c97c49125b5b0800000000000000
+      internalID: -5353335659172195189
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Materializer-Sheet_5
+      rect:
+        serializedVersion: 2
+        x: 251
+        y: 4
+        width: 46
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ce0515ea26231f1f0800000000000000
+      internalID: -1012973041768902420
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Materializer-Sheet_6
+      rect:
+        serializedVersion: 2
+        x: 301
+        y: 4
+        width: 46
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6a306b58501681810800000000000000
+      internalID: 1736244332697355174
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Materializer-Sheet_7
+      rect:
+        serializedVersion: 2
+        x: 351
+        y: 4
+        width: 46
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 14583387c515b35e0800000000000000
+      internalID: -1928858557802642111
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Materializer-Sheet_8
+      rect:
+        serializedVersion: 2
+        x: 401
+        y: 4
+        width: 46
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e98f74a9f58b2bee0800000000000000
+      internalID: -1246731426078394210
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Materializer-Sheet_9
+      rect:
+        serializedVersion: 2
+        x: 451
+        y: 4
+        width: 46
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8814aaa6ab5102510800000000000000
+      internalID: 1522240564448870792
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Materializer-Sheet_10
+      rect:
+        serializedVersion: 2
+        x: 501
+        y: 4
+        width: 46
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6c66ea08533d3aa70800000000000000
+      internalID: 8837139120576685766
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Materializer-Sheet_11
+      rect:
+        serializedVersion: 2
+        x: 551
+        y: 4
+        width: 46
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5d821ca4a500f0f50800000000000000
+      internalID: 6849693946055043285
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Materializer-Sheet_12
+      rect:
+        serializedVersion: 2
+        x: 601
+        y: 4
+        width: 46
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b424d2be98e5959e0800000000000000
+      internalID: -1632169443495951797
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Materializer-Sheet_13
+      rect:
+        serializedVersion: 2
+        x: 651
+        y: 4
+        width: 46
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 16854ef9c4880d800800000000000000
+      internalID: 635157410140674145
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Materializer-Sheet_14
+      rect:
+        serializedVersion: 2
+        x: 701
+        y: 4
+        width: 46
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d8bd7e47e155cbec0800000000000000
+      internalID: -3549868816976061555
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Materializer-Sheet_15
+      rect:
+        serializedVersion: 2
+        x: 751
+        y: 4
+        width: 46
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8aaf433ab0127dad0800000000000000
+      internalID: -2677635119581955416
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Materializer-Sheet_0: -7544682761380978292
+      Materializer-Sheet_1: 5584402062056452445
+      Materializer-Sheet_10: 8837139120576685766
+      Materializer-Sheet_11: 6849693946055043285
+      Materializer-Sheet_12: -1632169443495951797
+      Materializer-Sheet_13: 635157410140674145
+      Materializer-Sheet_14: -3549868816976061555
+      Materializer-Sheet_15: -2677635119581955416
+      Materializer-Sheet_2: -7090784763161991828
+      Materializer-Sheet_3: 2339175415807261643
+      Materializer-Sheet_4: -5353335659172195189
+      Materializer-Sheet_5: -1012973041768902420
+      Materializer-Sheet_6: 1736244332697355174
+      Materializer-Sheet_7: -1928858557802642111
+      Materializer-Sheet_8: -1246731426078394210
+      Materializer-Sheet_9: 1522240564448870792
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
