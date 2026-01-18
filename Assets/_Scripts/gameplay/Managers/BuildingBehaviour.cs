@@ -16,6 +16,12 @@ public class BuildingBehaviour : MonoBehaviour
 
         if (building.data != null && building.data.sprite != null)
             spriteRenderer.sprite = building.data.sprite;
+
+        // Handle conveyor belt rotation setup
+        if (buildingBase != null)
+        {
+            transform.rotation = Quaternion.Euler(0, 0, buildingBase.rotation);
+        }
     }
 
     private void Update()
@@ -43,5 +49,20 @@ public class BuildingBehaviour : MonoBehaviour
     {
         buildingBase.rotation = (buildingBase.rotation + 90) % 360;
         transform.rotation = Quaternion.Euler(0, 0, buildingBase.rotation);
+
+        // Update conveyor belt connections when rotated
+        if (buildingBase is ConveyorBeltBuilding conveyorBelt)
+        {
+            conveyorBelt.UpdateConnections();
+        }
+    }
+
+    private void OnDestroy()
+    {
+        // Handle conveyor belt cleanup
+        if (buildingBase is ConveyorBeltBuilding conveyorBelt)
+        {
+            SimpleConveyorSystem.Instance?.UnregisterConveyor(conveyorBelt);
+        }
     }
 }

@@ -68,6 +68,13 @@ public class BuildingManager : MonoBehaviour
         if (ItemTransferManager.Instance != null)
             ItemTransferManager.Instance.RegisterBuilding(behaviour);
 
+        // Handle conveyor belt specific setup
+        if (buildingBase is ConveyorBeltBuilding conveyorBelt)
+        {
+            conveyorBelt.UpdateConnections();
+            SimpleConveyorSystem.Instance?.RegisterConveyor(conveyorBelt);
+        }
+
         return behaviour;
     }
 
@@ -100,8 +107,11 @@ public class BuildingManager : MonoBehaviour
             case BuildingType.Distribution:
                 return new DistributionBuilding(data);
 
+            case BuildingType.ConveyorBelt:
+                return new ConveyorBeltBuilding(data);
+
             default:
-                Debug.LogError("This shouldnt be happening.");
+                Debug.LogError("This shouldnt be happening. Unknown building type: " + data.buildingType);
                 return null;
         }
     }
@@ -117,6 +127,12 @@ public class BuildingManager : MonoBehaviour
 
         if (ItemTransferManager.Instance != null)
             ItemTransferManager.Instance.UnregisterBuilding(building);
+
+        // Handle conveyor belt specific cleanup
+        if (building.buildingBase is ConveyorBeltBuilding conveyorBelt)
+        {
+            SimpleConveyorSystem.Instance?.UnregisterConveyor(conveyorBelt);
+        }
 
         allBuildings.Remove(building);
         Destroy(building.gameObject);

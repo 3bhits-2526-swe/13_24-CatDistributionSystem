@@ -15,8 +15,8 @@ MonoBehaviour:
   buildingName: Factory
   buildingType: 1
   size:
-    width: 4
-    height: 3
+    width: 2
+    height: 4
   baseCost: 1000
   sprite: {fileID: 21300000, guid: aafc026c7f409b64591e60f3a1a7d64e, type: 3}
   prefab: {fileID: 5630003479578621150, guid: ae7158dc47172c540b2aa1a04f7fcccd, type: 3}
