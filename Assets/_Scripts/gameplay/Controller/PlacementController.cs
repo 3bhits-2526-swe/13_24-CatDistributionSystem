@@ -114,6 +114,7 @@ public class PlacementController : MonoBehaviour
 
     private void CreateGhostObject()
     {
+        Debug.Log("Created Ghost Object Placement Controller");
         if (ghostObject != null)
             Destroy(ghostObject);
 
@@ -145,15 +146,12 @@ public class PlacementController : MonoBehaviour
             return;
         }
 
-        Debug.Log("Survived Checks");
         BuildingBehaviour building = BuildingManager.Instance.PlaceBuilding(selectedBuildingData, gridPos);
 
         if (building != null)
         {
             building.buildingBase.rotation = currentRotation;
             building.transform.rotation = Quaternion.Euler(0, 0, currentRotation);
-
-
 
             CancelPlacement();
         }

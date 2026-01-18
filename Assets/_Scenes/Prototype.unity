@@ -514,13 +514,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   asciiShader: {fileID: 4800000, guid: 7880e9a3653de0f4cabb1073868c50c1, type: 3}
   asciiCompute: {fileID: 7200000, guid: 4d6960cc3e4e3f04489253bc27368c76, type: 3}
-  asciiTex: {fileID: 2800000, guid: c3218afe21b850d4a98748f1e76d3516, type: 3}
+  asciiTex: {fileID: 2800000, guid: 6b4104266a9f0d1478e8584a477d03c8, type: 3}
   edgeTex: {fileID: 2800000, guid: 86a87fa754afa164bb46719dccfc5b7a, type: 3}
   gaussianKernelSize: 2
   stdev: 2
-  stdevScale: 1.6
-  tau: 1
-  threshold: 0.005
+  stdevScale: 0.41
+  tau: 0.85
+  threshold: 0.001
   invert: 0
   viewDog: 0
   viewSobel: 0
@@ -531,8 +531,8 @@ MonoBehaviour:
   noEdges: 0
   noFill: 0
   edgeThreshold: 8
-  exposure: 1
-  attenuation: 1
+  exposure: 0.71
+  attenuation: 5.25
 --- !u!114 &238061449
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -821,7 +821,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1120553400}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.5806775
+  m_Size: 0.58067745
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1323,12 +1323,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   asciiShader: {fileID: 4800000, guid: 7880e9a3653de0f4cabb1073868c50c1, type: 3}
   asciiCompute: {fileID: 7200000, guid: 4d6960cc3e4e3f04489253bc27368c76, type: 3}
-  asciiTex: {fileID: 2800000, guid: 6b4104266a9f0d1478e8584a477d03c8, type: 3}
+  asciiTex: {fileID: 2800000, guid: 63cf5ad6cdbdcf24486528ae0bd17a09, type: 3}
   edgeTex: {fileID: 2800000, guid: 86a87fa754afa164bb46719dccfc5b7a, type: 3}
-  gaussianKernelSize: 2
-  stdev: 2
-  stdevScale: 0.41
-  tau: 0.85
+  gaussianKernelSize: 10
+  stdev: 5
+  stdevScale: 0.1
+  tau: 1.21
   threshold: 0.001
   invert: 0
   viewDog: 0
@@ -1339,9 +1339,9 @@ MonoBehaviour:
   viewQuantizedSobel: 0
   noEdges: 0
   noFill: 0
-  edgeThreshold: 8
-  exposure: 0.71
-  attenuation: 5.25
+  edgeThreshold: 0
+  exposure: 1.53
+  attenuation: 1.14
 --- !u!114 &439840351
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -36,6 +36,7 @@ public class BuildingBehaviour : MonoBehaviour
     {
         if (UIManager.Instance != null)
             UIManager.Instance.ShowBuildingInfo(this);
+        Debug.Log("Clicked On Building: " + gameObject.name);
     }
 
     public void Rotate()

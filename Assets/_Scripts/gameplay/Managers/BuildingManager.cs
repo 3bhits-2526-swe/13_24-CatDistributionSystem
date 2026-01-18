@@ -42,11 +42,13 @@ public class BuildingManager : MonoBehaviour
 
         GameObject buildingObj = new GameObject(data.buildingName);
         BuildingBehaviour behaviour = buildingObj.AddComponent<BuildingBehaviour>();
+        buildingObj.AddComponent<BoxCollider2D>();
 
         BuildingBase buildingBase = CreateBuildingInstance(data, outputItem, recipe);
         if (buildingBase == null)
         {
             Destroy(buildingObj);
+            Debug.LogError("BuildingBase was null, couldnt create a instance");
             return null;
         }
 
@@ -73,6 +75,8 @@ public class BuildingManager : MonoBehaviour
     {
         if (data == null) return null;
 
+        Debug.Log("Create Building Instance: " + data.buildingName);
+
         switch (data.buildingType)
         {
             case BuildingType.Materializer:
@@ -97,6 +101,7 @@ public class BuildingManager : MonoBehaviour
                 return new DistributionBuilding(data);
 
             default:
+                Debug.LogError("This shouldnt be happening.");
                 return null;
         }
     }

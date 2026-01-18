@@ -19,6 +19,7 @@ public class MaterializerBuilding : BuildingBase
 
         if (outputBuffer.CanAddItem())
         {
+            Debug.Log("Producing");
             var newItem = new ItemInstance(rawMaterial);
             outputBuffer.AddItem(newItem);
         }
