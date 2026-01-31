@@ -1,0 +1,31 @@
+using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
+
+public class BuildButtonUI : MonoBehaviour
+{
+    [SerializeField] private Image icon;
+    [SerializeField] private TMP_Text label;
+    [SerializeField] private Button button;
+
+    private BuildingType type;
+
+    public void Bind(BuildingType buildingType)
+    {
+        type = buildingType;
+        icon.sprite = buildingType.Icon;
+        label.text = buildingType.DisplayName;
+        button.onClick.AddListener(OnClicked);
+    }
+
+    private void OnClicked()
+    {
+        PlacementState.Instance.BeginPlacement(type);
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space)) { PlacementState.Instance.BeginPlacement(type); }
+    }
+
+}

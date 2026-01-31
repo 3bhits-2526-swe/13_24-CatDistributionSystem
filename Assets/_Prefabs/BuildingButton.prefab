@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6327424668083894344}
   - component: {fileID: 22194912862292277}
   - component: {fileID: 8333791449138530415}
-  - component: {fileID: -93424936814679854}
+  - component: {fileID: 1626567208698654712}
   m_Layer: 5
   m_Name: BuildingButton
   m_TagString: Untagged
@@ -136,7 +136,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &-93424936814679854
+--- !u!114 &1626567208698654712
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -145,17 +145,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1900929838703853105}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 50a2960f3a382794e8a9e84e9db0db38, type: 3}
+  m_Script: {fileID: 11500000, guid: aa1b57e9f504e8248bda6e0399b5d6a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iconImage: {fileID: 22194912862292277}
-  nameText: {fileID: 6948653933212178225}
-  costText: {fileID: 4548782604262505004}
-  backgroundImage: {fileID: 108867382568398733}
-  placementMode: 1
-  normalColor: {r: 1, g: 1, b: 1, a: 1}
-  hoverColor: {r: 0, g: 1, b: 0, a: 1}
-  cannotAffordColor: {r: 1, g: 0, b: 0, a: 1}
+  icon: {fileID: 108867382568398733}
+  label: {fileID: 6948653933212178225}
+  button: {fileID: 8333791449138530415}
 --- !u!1 &3777147730713527454
 GameObject:
   m_ObjectHideFlags: 0
