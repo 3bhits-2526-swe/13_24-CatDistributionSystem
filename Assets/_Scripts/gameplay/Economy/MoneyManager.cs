@@ -1,8 +1,11 @@
 using UnityEngine;
+using System;
 
 public class MoneyManager : MonoBehaviour
 {
     public static MoneyManager Instance { get; private set; }
+
+    public event Action MoneyChange;
 
     [SerializeField] private int money;
 
@@ -16,6 +19,7 @@ public class MoneyManager : MonoBehaviour
     public void Add(int amount)
     {
         money += amount;
+        MoneyChange?.Invoke();
         Debug.Log($"Earned Money: +{amount}");
     }
 
@@ -30,6 +34,7 @@ public class MoneyManager : MonoBehaviour
             return false;
 
         money -= amount;
+        MoneyChange?.Invoke();
         return true;
     }
 }

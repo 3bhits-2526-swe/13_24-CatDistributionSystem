@@ -6,6 +6,7 @@ public class BuildButtonUI : MonoBehaviour
 {
     [SerializeField] private Image icon;
     [SerializeField] private TMP_Text label;
+    [SerializeField] private TMP_Text cost;
     [SerializeField] private Button button;
 
     private BuildingType type;
@@ -15,6 +16,7 @@ public class BuildButtonUI : MonoBehaviour
         type = buildingType;
         icon.sprite = buildingType.Icon;
         label.text = buildingType.DisplayName;
+        cost.text = buildingType.Cost.ToString();
         button.onClick.AddListener(OnClicked);
     }
 
