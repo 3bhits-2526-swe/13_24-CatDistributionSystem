@@ -2,15 +2,29 @@ using UnityEngine;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 
-public class Factory : MonoBehaviour
+public class Factory : BuildingBase
 {
-    [SerializeField] private Recipe recipe;
     [SerializeField] private BuildingInput input;
     [SerializeField] private BuildingOutput output;
 
     private Dictionary<ItemType, int> inputBuffer = new();
     private float processTimer;
     private bool isProcessing;
+    private int activeRecipe;
+
+    public override float ProductionTime => CurrentRecipe.BaseProcessTime;
+    public override string StateText => isProcessing ? "Working" : "Waiting";
+    public override int ActiveRecipeIndex => activeRecipe;
+
+    private Recipe CurrentRecipe => Type.recipes[activeRecipe];
+
+    public override void SetRecipe(int index)
+    {
+        if (index < 0 || index >= Type.recipes.Length)
+            return;
+
+        activeRecipe = index;
+    }
 
     private void Update()
     {
@@ -45,7 +59,7 @@ public class Factory : MonoBehaviour
         {
             processTimer += Time.deltaTime;
 
-            if (processTimer >= recipe.BaseProcessTime)
+            if (processTimer >= CurrentRecipe.BaseProcessTime)
                 FinishRecipe();
 
             return;
@@ -62,11 +76,10 @@ public class Factory : MonoBehaviour
     private void FinishRecipe()
     {
         isProcessing = false;
-
-        for (int i = 0; i < recipe.Outputs.Length; i++)
+        for (int i = 0; i < CurrentRecipe.Outputs.Length; i++)
         {
             ItemInstance item = Instantiate(
-                recipe.Outputs[i],
+                CurrentRecipe.Outputs[i],
                 output.transform.position,
                 Quaternion.identity
             );
@@ -81,8 +94,8 @@ public class Factory : MonoBehaviour
 
     private bool RecipeNeeds(ItemType type)
     {
-        for (int i = 0; i < recipe.Inputs.Length; i++)
-            if (recipe.Inputs[i] == type)
+        for (int i = 0; i < CurrentRecipe.Inputs.Length; i++)
+            if (CurrentRecipe.Inputs[i] == type)
                 return true;
 
         return false;
@@ -90,10 +103,10 @@ public class Factory : MonoBehaviour
 
     private bool HasAllInputs()
     {
-        for (int i = 0; i < recipe.Inputs.Length; i++)
+        for (int i = 0; i < CurrentRecipe.Inputs.Length; i++)
         {
-            ItemType type = recipe.Inputs[i];
-            int required = recipe.InputCounts[i];
+            ItemType type = CurrentRecipe.Inputs[i];
+            int required = CurrentRecipe.InputCounts[i];
 
             if (!inputBuffer.ContainsKey(type))
                 return false;
@@ -107,10 +120,10 @@ public class Factory : MonoBehaviour
 
     private void ConsumeRecipeInputs()
     {
-        for (int i = 0; i < recipe.Inputs.Length; i++)
+        for (int i = 0; i < CurrentRecipe.Inputs.Length; i++)
         {
-            ItemType type = recipe.Inputs[i];
-            int required = recipe.InputCounts[i];
+            ItemType type = CurrentRecipe.Inputs[i];
+            int required = CurrentRecipe.InputCounts[i];
 
             inputBuffer[type] -= required;
         }

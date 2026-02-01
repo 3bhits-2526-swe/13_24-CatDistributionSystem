@@ -17,3 +17,6 @@ MonoBehaviour:
   prefab: {fileID: 2249187911398869670, guid: 253e47c2f18021d42bfa7496c2fd5247, type: 3}
   size: {x: 2, y: 2}
   cost: 200
+  level: 0
+  recipes:
+  - {fileID: 11400000, guid: a2168bae743ab7b4fa300a7c58830f94, type: 2}

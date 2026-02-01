@@ -1,8 +1,20 @@
 using UnityEngine;
 
-public class BuildingBase : MonoBehaviour
+
+public abstract class BuildingBase : MonoBehaviour, IBuildingInspectable
 {
     [SerializeField] private int gridID;
+    [SerializeField] internal BuildingType buildingType;
+
+    protected int level;
+    public BuildingType Type => buildingType;
+    public int Level => level;
+
+    public abstract float ProductionTime { get; }
+    public abstract string StateText { get; }
+    public abstract int ActiveRecipeIndex { get; }
+    public abstract void SetRecipe(int index);
+
 
     private void Start()
     {

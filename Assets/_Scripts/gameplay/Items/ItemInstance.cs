@@ -6,9 +6,9 @@ public class ItemInstance : MonoBehaviour
     [SerializeField] private float moveSpeed = 2f;
     internal float valueMultiplier = 1f;
 
-
     private Vector3 moveDirection;
     private bool isMoving;
+    private bool isPackaged = false;
 
     public ItemType ItemType => itemType;
 
@@ -31,9 +31,20 @@ public class ItemInstance : MonoBehaviour
         transform.position += moveDirection * moveSpeed * Time.deltaTime;
     }
 
-    public void SetValueMultiplier(float multiplier)
+    public void ApplyPackaging()
     {
-        valueMultiplier *= multiplier;
+        if (isPackaged) return;
+
+        isPackaged = true;
+        valueMultiplier = itemType.ValueMultiplier;
+
+        // Update the visual look
+        SpriteRenderer sr = GetComponentInChildren<SpriteRenderer>();
+        if (sr != null && itemType.PackagedSprite != null)
+        {
+            sr.sprite = itemType.PackagedSprite;
+        }
     }
 
+    public void SetValueMultiplier(float multiplier) => valueMultiplier = multiplier;
 }

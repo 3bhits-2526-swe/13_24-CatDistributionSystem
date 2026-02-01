@@ -1,68 +1,32 @@
 using UnityEngine;
 
-public class Packager : MonoBehaviour
+public class Packager : BuildingBase
 {
-    [SerializeField] private PackagerRecipe recipe;
     [SerializeField] private BuildingInput input;
     [SerializeField] private BuildingOutput output;
 
-    private int bufferedCount;
-    private float timer;
-    private bool isProcessing;
+    public override float ProductionTime => 0;
+    public override string StateText => "Packaging";
+    public override int ActiveRecipeIndex => -1;
+    public override void SetRecipe(int index) { }
 
     private void Update()
     {
-        TryConsumeInput();
-        Process();
-    }
-
-    private void TryConsumeInput()
-    {
-        if (isProcessing)
-            return;
-
-        if (!input.TryConsume(out ItemInstance item))
-            return;
-
-        if (item.ItemType != recipe.Input)
-            return;
-
-        Destroy(item.gameObject);
-        bufferedCount++;
-    }
-
-    private void Process()
-    {
-        if (isProcessing)
+        if (!output.IsFull && input.TryConsume(out ItemInstance item))
         {
-            timer += Time.deltaTime;
-
-            if (timer >= recipe.ProcessTime)
-                Finish();
-
-            return;
+            TransformItem(item);
         }
-
-        if (bufferedCount < 1)
-            return;
-
-        bufferedCount--;
-        timer = 0f;
-        isProcessing = true;
     }
 
-    private void Finish()
+    private void TransformItem(ItemInstance item)
     {
-        isProcessing = false;
+        item.ApplyPackaging();
 
-        ItemInstance item = Instantiate(
-            recipe.Output,
-            output.transform.position,
-            Quaternion.identity
-        );
-        item.gameObject.SetActive(false);
+        item.transform.position = output.transform.position;
 
-        item.SetValueMultiplier(recipe.ValueMultiplier);
-        output.TryOutput(item);
+        if (!output.TryOutput(item))
+        {
+            Destroy(item.gameObject);
+        }
     }
 }

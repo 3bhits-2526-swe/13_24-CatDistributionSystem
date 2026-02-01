@@ -14,4 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   displayName: CatPowder
   sprite: {fileID: -8247407949599050544, guid: 7931df05d8e8b014fb3e8669bdb8d3a5, type: 3}
+  packagedSprite: {fileID: -8247407949599050544, guid: 7931df05d8e8b014fb3e8669bdb8d3a5, type: 3}
   value: 100
+  valueMultiplier: 1

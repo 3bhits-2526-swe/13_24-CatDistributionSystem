@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 3449048979859314430}
   - component: {fileID: 5994199831901143364}
-  - component: {fileID: 2056199703904589823}
   - component: {fileID: 3215709220857418956}
-  - component: {fileID: 7122356237538556177}
+  - component: {fileID: 2056199703904589823}
+  - component: {fileID: 7048217230623982893}
   m_Layer: 6
   m_Name: ConveyorBelt
   m_TagString: Untagged
@@ -92,25 +92,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &2056199703904589823
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2249187911398869670}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a7593d334c4cd4f48bcc88daa1ed1a6f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 2
-  entryPoint: {fileID: 1856656643910208040}
-  exitPoint: {fileID: 5552038174530183464}
-  conveyorLayer:
-    serializedVersion: 2
-    m_Bits: 64
-  linkRadius: 0.2
 --- !u!61 &3215709220857418956
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -157,7 +138,7 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 2.12375, y: 1.655}
   m_EdgeRadius: 0
---- !u!114 &7122356237538556177
+--- !u!114 &2056199703904589823
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -166,10 +147,29 @@ MonoBehaviour:
   m_GameObject: {fileID: 2249187911398869670}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c825becd6ded79f4090b2fa83c556422, type: 3}
+  m_Script: {fileID: 11500000, guid: a7593d334c4cd4f48bcc88daa1ed1a6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gridId: 0
+  gridID: 0
+  buildingType: {fileID: 11400000, guid: a71d767f215f95f4e888486813f3d5f0, type: 2}
+  entryPoint: {fileID: 1856656643910208040}
+  exitPoint: {fileID: 5552038174530183464}
+  conveyorLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  linkRadius: 0.2
+--- !u!114 &7048217230623982893
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2249187911398869670}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67963b4eb711db6468496f06506af9f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3178906737315949345
 GameObject:
   m_ObjectHideFlags: 0

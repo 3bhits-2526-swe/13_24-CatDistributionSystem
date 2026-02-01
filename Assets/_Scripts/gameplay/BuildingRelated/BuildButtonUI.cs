@@ -14,9 +14,9 @@ public class BuildButtonUI : MonoBehaviour
     public void Bind(BuildingType buildingType)
     {
         type = buildingType;
-        icon.sprite = buildingType.Icon;
-        label.text = buildingType.DisplayName;
-        cost.text = buildingType.Cost.ToString();
+        icon.sprite = buildingType.icon;
+        label.text = buildingType.displayName;
+        cost.text = buildingType.cost.ToString();
         button.onClick.AddListener(OnClicked);
     }
 

@@ -1,12 +1,17 @@
 using UnityEngine;
 
-public class Materializer : MonoBehaviour
+public class Materializer : BuildingBase
 {
     [SerializeField] private ItemInstance itemPrefab;
     [SerializeField] private float interval = 1f;
     private BuildingOutput output;
 
     private float timer;
+
+    public override float ProductionTime => interval;
+    public override string StateText => "Producing";
+    public override int ActiveRecipeIndex => -1;
+    public override void SetRecipe(int index) { }
 
     private void Awake()
     {

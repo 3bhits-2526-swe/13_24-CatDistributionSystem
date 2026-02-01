@@ -10,8 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 3449048979859314430}
   - component: {fileID: 5994199831901143364}
-  - component: {fileID: 5326580196773849170}
+  - component: {fileID: 6861396698648079085}
   - component: {fileID: 6480693419873132037}
+  - component: {fileID: -5566030669262476857}
   m_Layer: 0
   m_Name: Materializer
   m_TagString: Untagged
@@ -90,19 +91,52 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &5326580196773849170
-MonoBehaviour:
+--- !u!61 &6861396698648079085
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2249187911398869670}
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c825becd6ded79f4090b2fa83c556422, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gridId: 0
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1.84, y: 1.64}
+    newSize: {x: 2.58875, y: 1.3575768}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 1.84, y: 1.64}
+  m_EdgeRadius: 0
 --- !u!114 &6480693419873132037
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -115,8 +149,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66963011a8611f94cb0302cefc57885e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gridID: 0
+  buildingType: {fileID: 11400000, guid: 038fbc5c13f861a4aa1e90998ee2dec8, type: 2}
   itemPrefab: {fileID: 4857951564964194490, guid: ecb2dbd362c90e3469eb17861e899f89, type: 3}
   interval: 2
+--- !u!114 &-5566030669262476857
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2249187911398869670}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67963b4eb711db6468496f06506af9f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3178906737315949345
 GameObject:
   m_ObjectHideFlags: 0
@@ -165,3 +213,4 @@ MonoBehaviour:
   conveyorLayer:
     serializedVersion: 2
     m_Bits: 64
+  capacity: 5

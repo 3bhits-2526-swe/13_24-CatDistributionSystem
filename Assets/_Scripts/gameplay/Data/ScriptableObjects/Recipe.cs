@@ -3,6 +3,8 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "CDS/Recipe")]
 public class Recipe : ScriptableObject
 {
+    public string displayName;
+
     [SerializeField] private ItemType[] inputs;
     [SerializeField] private int[] inputCounts;
 

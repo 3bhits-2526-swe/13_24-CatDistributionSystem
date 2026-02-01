@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5897cfdb3bad394281f77b929e77e7d, type: 3}
   m_Name: TestRecipe
   m_EditorClassIdentifier: 
+  displayName: MakeCat
   inputs:
   - {fileID: 11400000, guid: 2d0af18844541314fb7597f021e2c1a9, type: 2}
   inputCounts: 01000000

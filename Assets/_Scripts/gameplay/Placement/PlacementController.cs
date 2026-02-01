@@ -70,16 +70,16 @@ public class PlacementController : MonoBehaviour
         if (!GridManager.Instance.CanPlace(grid, size))
             return;
 
-        if (!MoneyManager.Instance.CanAfford(type.Cost))
+        if (!MoneyManager.Instance.CanAfford(type.cost))
         {
             Debug.Log("Not enough money");
             return;
         }
 
-        if (!MoneyManager.Instance.Spend(type.Cost))
+        if (!MoneyManager.Instance.Spend(type.cost))
             return;
 
-        GameObject obj = Instantiate(type.Prefab);
+        GameObject obj = Instantiate(type.prefab);
         BuildingBase building = obj.GetComponent<BuildingBase>();
         building.Place(grid, size);
 
@@ -95,8 +95,8 @@ public class PlacementController : MonoBehaviour
     {
         BuildingType type = PlacementState.Instance.Current;
         return new Vector2Int(
-            type.Size.x * rotation.x,
-            type.Size.y * rotation.y
+            type.size.x * rotation.x,
+            type.size.y * rotation.y
         );
     }
 

@@ -1,8 +1,13 @@
 using UnityEngine;
 
-public class Distributor : MonoBehaviour
+public class Distributor : BuildingBase
 {
     [SerializeField] private BuildingInput input;
+
+    public override float ProductionTime => 0f;
+    public override string StateText => "Selling";
+    public override int ActiveRecipeIndex => -1;
+    public override void SetRecipe(int index) { }
 
     private void Update()
     {

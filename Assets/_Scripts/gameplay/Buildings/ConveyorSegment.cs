@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class ConveyorSegment : MonoBehaviour
+public class ConveyorSegment : BuildingBase
 {
     public static event Action ConveyorTopologyChanged;
 
@@ -12,6 +12,11 @@ public class ConveyorSegment : MonoBehaviour
 
     private ConveyorSegment nextSegment;
     private ItemInstance currentItem;
+
+    public override float ProductionTime => 0;
+    public override string StateText => "Transporting";
+    public override int ActiveRecipeIndex => -1;
+    public override void SetRecipe(int index) { }
 
     private void RebuildLinks()
     {
