@@ -5,6 +5,8 @@ public class ConveyorSegment : BuildingBase
 {
     public static event Action ConveyorTopologyChanged;
 
+    [Header("ConveyorSegment")]
+    
     [SerializeField] private Transform entryPoint;
     [SerializeField] private Transform exitPoint;
     [SerializeField] private LayerMask conveyorLayer;

@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class Distributor : BuildingBase
 {
+    [Header("Distributor")]
     [SerializeField] private BuildingInput input;
 
     public override float ProductionTime => 0f;

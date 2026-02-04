@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class Packager : BuildingBase
 {
+    [Header("Packager")]
     [SerializeField] private BuildingInput input;
     [SerializeField] private BuildingOutput output;
 

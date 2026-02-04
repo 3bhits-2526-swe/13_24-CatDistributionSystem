@@ -4,6 +4,7 @@ using Unity.VisualScripting;
 
 public class Factory : BuildingBase
 {
+    [Header("Factory")]
     [SerializeField] private BuildingInput input;
     [SerializeField] private BuildingOutput output;
 

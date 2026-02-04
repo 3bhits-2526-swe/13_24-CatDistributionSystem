@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class Materializer : BuildingBase
 {
+    [Header("Materializer")]
     [SerializeField] private ItemInstance itemPrefab;
     [SerializeField] private float interval = 1f;
     private BuildingOutput output;

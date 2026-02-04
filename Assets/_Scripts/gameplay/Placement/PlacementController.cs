@@ -2,11 +2,16 @@ using UnityEngine;
 
 public class PlacementController : MonoBehaviour
 {
-    [SerializeField] private Camera cam;
     [SerializeField] private PlacementGhost ghostPrefab;
+    private Camera cam;
 
     private PlacementGhost ghost;
     private Vector2Int rotation = Vector2Int.one;
+
+    private void Awake()
+    {
+        cam = Camera.main;
+    }
 
     private void Update()
     {
@@ -35,6 +40,7 @@ public class PlacementController : MonoBehaviour
             return;
 
         ghost = Instantiate(ghostPrefab);
+        ghost.GetComponent<SpriteRenderer>().sprite = PlacementState.Instance.Current.icon;
     }
 
     private void ClearGhost()

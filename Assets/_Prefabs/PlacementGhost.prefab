@@ -101,5 +101,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rendererer: {fileID: 1245770894500811901}
-  validColor: {r: 0.40558875, g: 1, b: 0.05345905, a: 0.35686275}
-  invalidColor: {r: 0.8930817, g: 0.18254809, b: 0.18254809, a: 0.49019608}
+  validColor: {r: 0.40558875, g: 1, b: 0.05345905, a: 1}
+  invalidColor: {r: 0.8930817, g: 0.18254809, b: 0.18254809, a: 1}
